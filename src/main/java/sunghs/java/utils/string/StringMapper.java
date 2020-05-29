@@ -7,7 +7,8 @@ import java.util.regex.Pattern;
 /**
  * 문자열 내에 있는 ${key}로 된 매핑 규칙을 ValueMap의 key로 value를 가져와 치환합니다.
  *
- * @author SUNGHS
+ * @author https://sunghs.tistory.com
+ * @see <a href="https://github.com/sunghs/java-utils">source</a>
  */
 public class StringMapper {
 
