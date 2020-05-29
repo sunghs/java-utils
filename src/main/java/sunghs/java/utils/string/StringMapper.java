@@ -1,6 +1,8 @@
 package sunghs.java.utils.string;
 
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * 문자열 내에 있는 ${key}로 된 매핑 규칙을 ValueMap의 key로 value를 가져와 치환합니다.
@@ -14,6 +16,12 @@ public class StringMapper {
     public static final String MAPPING_SUFFIX = "}";
 
     public static final String EMPTY_STRING = "";
+
+    /**
+     * 정규표현식 메소드에서 MAPPING_PREFIX, MAPPING_SUFFIX 상수를 이용하므로
+     * 표현식을 바꾸는 경우 위 상수도 규칙에 맞게 같이 바꿔줘야 합니다.
+     */
+    public static final String MAPPING_PATTERN = "\\$\\{([a-zA-Z0-9]*)}";
 
     static class Cursor {
 
@@ -36,6 +44,16 @@ public class StringMapper {
         int getE() {
             return this.e;
         }
+    }
+
+    private static Cursor find(String source, int offset) {
+        int sid = source.indexOf(MAPPING_PREFIX, offset);
+        int eid = source.indexOf(MAPPING_SUFFIX, offset);
+
+        Cursor csr = new Cursor();
+        csr.setS(sid);
+        csr.setE(eid);
+        return csr;
     }
 
     public static String doReplace(final String str, final Map<String, String> map) {
@@ -63,13 +81,16 @@ public class StringMapper {
         return replaced;
     }
 
-    private static Cursor find(String source, int offset) {
-        int sid = source.indexOf(MAPPING_PREFIX, offset);
-        int eid = source.indexOf(MAPPING_SUFFIX, offset);
+    public static String doReplaceWithRegEx(final String str, final Map<String, String> map) {
+        Pattern pattern = Pattern.compile(MAPPING_PATTERN);
+        Matcher matcher = pattern.matcher(str);
+        String replaced = str;
 
-        Cursor csr = new Cursor();
-        csr.setS(sid);
-        csr.setE(eid);
-        return csr;
+        while(matcher.find()) {
+            String key = matcher.group(1);
+            String value = (map.get(key) == null ? EMPTY_STRING : map.get(key));
+            replaced = replaced.replace(MAPPING_PREFIX + key + MAPPING_SUFFIX, value);
+        }
+        return replaced;
     }
 }
