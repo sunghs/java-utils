@@ -17,6 +17,11 @@ dependencies {
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
     }
+
+
+    //StringMapper의 parse를 위한 라이브러리
+    implementation("org.apache.commons:commons-text:1.8")
+
 }
 
 test {
