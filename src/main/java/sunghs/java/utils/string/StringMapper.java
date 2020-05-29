@@ -83,7 +83,7 @@ public class StringMapper {
         Matcher matcher = pattern.matcher(str);
         String replaced = str;
 
-        while(matcher.find()) {
+        while (matcher.find()) {
             String prefix = matcher.group(1);
             String key = matcher.group(2);
             String suffix = matcher.group(3);
