@@ -17,11 +17,7 @@ public class StringMapper {
 
     public static final String EMPTY_STRING = "";
 
-    /**
-     * 정규표현식 메소드에서 MAPPING_PREFIX, MAPPING_SUFFIX 상수를 이용하므로
-     * 표현식을 바꾸는 경우 위 상수도 규칙에 맞게 같이 바꿔줘야 합니다.
-     */
-    public static final String MAPPING_PATTERN = "\\$\\{([a-zA-Z0-9]*)}";
+    public static final String MAPPING_PATTERN = "(\\$\\{)([a-zA-Z0-9]*)(})";
 
     static class Cursor {
 
@@ -87,9 +83,11 @@ public class StringMapper {
         String replaced = str;
 
         while(matcher.find()) {
-            String key = matcher.group(1);
+            String prefix = matcher.group(1);
+            String key = matcher.group(2);
+            String suffix = matcher.group(3);
             String value = (map.get(key) == null ? EMPTY_STRING : map.get(key));
-            replaced = replaced.replace(MAPPING_PREFIX + key + MAPPING_SUFFIX, value);
+            replaced = replaced.replace(prefix + key + suffix, value);
         }
         return replaced;
     }
