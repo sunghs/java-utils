@@ -22,8 +22,12 @@ dependencies {
     // StringMapper의 parse를 위한 라이브러리
     implementation("org.apache.commons:commons-text:1.8")
 
-   // Lombok
+    // Lombok
     implementation('org.projectlombok:lombok')
+
+    // Excel
+    // https://mvnrepository.com/artifact/org.apache.poi/poi-ooxml
+    implementation('org.apache.poi:poi-ooxml:4.1.2')
 
 }
 
