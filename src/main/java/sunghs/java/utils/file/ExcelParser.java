@@ -24,14 +24,13 @@ public class ExcelParser {
 
     private final boolean isHeader;
 
-    private final DataFormatter formatter;
+    private final DataFormatter formatter = new DataFormatter();
 
     /**
      * @param isHeader 엑셀의 첫줄을 헤더로 볼 지 여부
      */
     public ExcelParser(final boolean isHeader) {
         this.isHeader = isHeader;
-        this.formatter = new DataFormatter();
     }
 
     /**
@@ -40,7 +39,7 @@ public class ExcelParser {
      * @param excelFile 엑셀파일
      * @param sheetIndex 시트번호, 첫 시트번호는 0
      * @return List&lt;Map&gt;
-     * @throws IOException
+     * @throws IOException IOException
      */
     public List<Map<String, String>> parse(final File excelFile, final int sheetIndex)
         throws IOException {
