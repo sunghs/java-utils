@@ -4,6 +4,11 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 
+/**
+ * 이미지 리사이징
+ * @author https://sunghs.tistory.com
+ * @see <a href="https://github.com/sunghs/java-utils">source</a>
+ */
 public class ImageResizer {
 
     public static final int MAX_SCALE_SIZE = 10000;
