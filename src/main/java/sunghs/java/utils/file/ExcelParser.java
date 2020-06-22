@@ -37,9 +37,9 @@ public class ExcelParser {
     /**
      * 엑셀을 읽어 List&lt;Map&gt;로 반환
      *
-     * @param excelFile
-     * @param sheetIndex
-     * @return
+     * @param excelFile 엑셀파일
+     * @param sheetIndex 시트번호, 첫 시트번호는 0
+     * @return List&lt;Map&gt;
      * @throws IOException
      */
     public List<Map<String, String>> parse(final File excelFile, final int sheetIndex)
