@@ -15,7 +15,7 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 /**
- * 엑셀 파일 파서
+ * 엑셀 파일을 읽어 반환해주는 파서
  *
  * @author https://sunghs.tistory.com
  * @see <a href="https://github.com/sunghs/java-utils">source</a>
