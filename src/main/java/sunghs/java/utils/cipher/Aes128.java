@@ -11,6 +11,12 @@ import java.util.Base64;
 import java.util.Optional;
 import java.util.function.Predicate;
 
+/**
+ * AES-128 암호화
+ *
+ * @author https://sunghs.tistory.com
+ * @see <a href="https://github.com/sunghs/java-utils">source</a>
+ */
 public class Aes128 {
 
     private static final Charset ENCODING_TYPE = StandardCharsets.UTF_8;
