@@ -22,13 +22,13 @@ public class Seed128Test {
 
     @Test
     public void passwordOverLength() {
-        // 유저 키가 16자리 이상 인 경우 에러
+        // 유저 키가 16자리 초과 인 경우 에러
         Seed128 s1 = new Seed128("password1234567890qwertyui");
     }
 
     @Test
     public void passwordUnderLength() {
-        // 유저 키가 16자리 이하 인 경우 에러
+        // 유저 키가 16자리 미만 인 경우 에러
         Seed128 s2 = new Seed128("password");
     }
 }
