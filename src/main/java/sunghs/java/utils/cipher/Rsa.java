@@ -12,6 +12,12 @@ import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 import java.util.Base64;
 
+/**
+ * RSA 암호화
+ *
+ * @author https://sunghs.tistory.com
+ * @see <a href="https://github.com/sunghs/java-utils">source</a>
+ */
 public class Rsa {
 
     private static final Charset ENCODING_TYPE = StandardCharsets.UTF_8;
