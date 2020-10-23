@@ -4,7 +4,7 @@
 
 ## 개발환경 (Dev Environment)
 - IDE : IntelliJ 2020.01
-- JDk : Amazon-corretto-11
+- JDK : Amazon-corretto-11
 - SpringBoot : 2.3
 - Gradle : 6.3
 
