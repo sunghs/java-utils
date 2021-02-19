@@ -8,6 +8,12 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * 객체 안의 멤버 중복 여부를 판단해주는 클래스
+ *
+ * @author https://sunghs.tistory.com
+ * @see <a href="https://github.com/sunghs/java-utils">source</a>
+ */
 @Slf4j
 public class DeduplicationUtils {
 
