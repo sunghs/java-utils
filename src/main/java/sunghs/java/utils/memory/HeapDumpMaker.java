@@ -16,6 +16,8 @@ import org.springframework.core.io.UrlResource;
 
 /**
  * 현재 시스템 Java Heap Dump hprof 파일을 만드는 클래스
+ * @author https://sunghs.tistory.com
+ * @see <a href="https://github.com/sunghs/java-utils">source</a>
  */
 @Slf4j
 public class HeapDumpMaker {
