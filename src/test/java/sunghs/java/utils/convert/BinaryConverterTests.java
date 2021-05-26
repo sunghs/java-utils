@@ -58,7 +58,7 @@ class BinaryConverterTests {
         byteBuffer2.put(convertedBytes);
         byteBuffer2.flip();
 
-        while(byteBuffer2.hasRemaining()) {
+        while (byteBuffer2.hasRemaining()) {
             fileChannel2.write(byteBuffer2);
         }
         randomAccessFile2.close();
@@ -68,9 +68,8 @@ class BinaryConverterTests {
     }
 
     boolean compare(String src, String dest) {
-        try {
-            FileChannel sChannel = new RandomAccessFile(src, "r").getChannel();
-            FileChannel dChannel = new RandomAccessFile(dest, "r").getChannel();
+        try (FileChannel sChannel = new RandomAccessFile(src, "r").getChannel();
+            FileChannel dChannel = new RandomAccessFile(dest, "r").getChannel()) {
 
             if (sChannel.size() != dChannel.size()) {
                 return false;
@@ -79,7 +78,7 @@ class BinaryConverterTests {
             ByteBuffer sBuffer = sChannel.map(MapMode.READ_ONLY, 0, sChannel.size());
             ByteBuffer dBuffer = sChannel.map(MapMode.READ_ONLY, 0, sChannel.size());
 
-            for (int i = 0; i < sChannel.size(); i ++) {
+            for (int i = 0; i < sChannel.size(); i++) {
                 if (sBuffer.get(i) != dBuffer.get(i)) {
                     return false;
                 }
