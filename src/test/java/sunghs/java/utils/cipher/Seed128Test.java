@@ -23,12 +23,12 @@ class Seed128Test {
     @Test
     void passwordOverLength() {
         // 유저 키가 16자리 초과 인 경우 에러
-        Seed128 s1 = new Seed128("password1234567890qwertyui");
+        Assertions.assertThrows(IllegalArgumentException.class, () -> new Seed128("password1234567890qwertyui"));
     }
 
     @Test
     void passwordUnderLength() {
         // 유저 키가 16자리 미만 인 경우 에러
-        Seed128 s2 = new Seed128("password");
+        Assertions.assertThrows(IllegalArgumentException.class, () -> new Seed128("password"));
     }
 }
