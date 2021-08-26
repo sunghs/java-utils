@@ -6,10 +6,10 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.*;
 
-public class ImageResizerTest {
+class ImageResizerTest {
 
     @Test
-    public void resizeTest() throws Exception {
+    void resizeTest() throws Exception {
         File original = new File("/Users/sunghs/Documents/Example/docker-image.png");
         InputStream in = new FileInputStream(original);
 

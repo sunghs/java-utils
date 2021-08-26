@@ -6,10 +6,10 @@ import org.junit.jupiter.api.Test;
 import java.util.HashMap;
 import java.util.Map;
 
-public class StringMapperTest {
+class StringMapperTest {
 
     @Test
-    public void StringMapperTest() {
+    void StringMapperTest() {
         Map<String, String> map = new HashMap<>();
         map.put("map1", "123123");
         map.put("aaaaaaaa", "234234");

@@ -5,10 +5,10 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 @Slf4j
-public class Seed128Test {
+class Seed128Test {
 
     @Test
-    public void test() {
+    void test() {
         Seed128 seed128 = new Seed128("password12345678");
         String plain = "this is plain text. 가나다라마바사. 123456";
         String enc = seed128.encrypt(plain);
@@ -21,13 +21,13 @@ public class Seed128Test {
     }
 
     @Test
-    public void passwordOverLength() {
+    void passwordOverLength() {
         // 유저 키가 16자리 초과 인 경우 에러
         Seed128 s1 = new Seed128("password1234567890qwertyui");
     }
 
     @Test
-    public void passwordUnderLength() {
+    void passwordUnderLength() {
         // 유저 키가 16자리 미만 인 경우 에러
         Seed128 s2 = new Seed128("password");
     }

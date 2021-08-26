@@ -1,17 +1,18 @@
 package sunghs.java.utils.file;
 
+import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Test;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
-import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.Test;
 
 @Slf4j
-public class ExcelParserTest {
+class ExcelParserTest {
 
     @Test
-    public void excelTestWithHeader() throws IOException {
+    void excelTestWithHeader() throws IOException {
         ExcelParser parser = new ExcelParser(true);
         File excel = new File("/Users/sunghs/excel.xlsx");
         List<Map<String, String>> list = parser.parse(excel, 0);
@@ -24,7 +25,7 @@ public class ExcelParserTest {
     }
 
     @Test
-    public void excelTestWithNoHeader() throws IOException {
+    void excelTestWithNoHeader() throws IOException {
         ExcelParser parser = new ExcelParser(false);
         File excel = new File("/Users/sunghs/excel.xlsx");
         List<Map<String, String>> list = parser.parse(excel, 1);

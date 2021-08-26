@@ -1,16 +1,17 @@
 package sunghs.java.utils.validation;
 
-import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import sunghs.java.utils.validation.model.StudentInfo;
 
+import java.util.List;
+
 @Slf4j
-public class DeduplicationUtilsTest {
+class DeduplicationUtilsTest {
 
     @Test
-    public void duplicationTest() {
+    void duplicationTest() {
         StudentInfo s1 = new StudentInfo(1, "홍길동", 15);
         StudentInfo s2 = new StudentInfo(2, "김길동", 12);
         StudentInfo s3 = new StudentInfo(3, "박길동", 18);

@@ -12,10 +12,10 @@ import java.security.PublicKey;
 import java.util.Optional;
 
 @Slf4j
-public class RsaTest {
+class RsaTest {
 
     @Test
-    public void createKeyPair() {
+    void createKeyPair() {
         KeyPair keyPair = Rsa.generateKey(1024);
         Optional.ofNullable(keyPair).ifPresent(k -> {
             PublicKey publicKey = k.getPublic();
@@ -27,7 +27,7 @@ public class RsaTest {
     }
 
     @Test
-    public void test() {
+    void test() {
         KeyPair keyPair = Rsa.generateKey(2048);
         Optional.ofNullable(keyPair).ifPresent(k -> {
             PublicKey publicKey = k.getPublic();
