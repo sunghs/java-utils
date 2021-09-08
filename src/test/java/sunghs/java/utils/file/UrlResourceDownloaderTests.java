@@ -16,7 +16,7 @@ class UrlResourceDownloaderTests {
 
     @Test
     void fileDownloadTest() {
-        UrlResourceDownloader urlResourceDownloader = new UrlResourceDownloader("get.jpg");
+        UrlResourceDownloader urlResourceDownloader = new UrlResourceDownloader("/user/sunghs/desktop/test.jpg");
         urlResourceDownloader.download(url);
     }
 }
