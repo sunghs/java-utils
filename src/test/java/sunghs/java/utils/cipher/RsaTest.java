@@ -1,6 +1,7 @@
 package sunghs.java.utils.cipher;
 
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import javax.crypto.BadPaddingException;
@@ -44,6 +45,7 @@ class RsaTest {
             public으로 암호화, private으로 복호화 한다.
              */
 
+            // given
             String plain = "test 1234567890 가나다라마바사아자차카타파하";
 
             try {
@@ -51,6 +53,8 @@ class RsaTest {
                 log.info("encrypted : {}", encrypted);
                 String decrypted = rsaForPrivate.decrypt(encrypted);
                 log.info("decrypted : {}", decrypted);
+
+                Assertions.assertEquals(decrypted, plain);
             } catch (InvalidKeyException | BadPaddingException | IllegalBlockSizeException e) {
                 e.printStackTrace();
             }

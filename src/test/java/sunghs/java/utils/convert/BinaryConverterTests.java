@@ -1,5 +1,9 @@
 package sunghs.java.utils.convert;
 
+import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.nio.ByteBuffer;
@@ -7,15 +11,16 @@ import java.nio.channels.FileChannel;
 import java.nio.channels.FileChannel.MapMode;
 import java.util.ArrayList;
 import java.util.List;
-import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
 
 @Slf4j
 class BinaryConverterTests {
 
     private final BinaryConverter binaryConverter = new BinaryConverter(8);
 
+    /**
+     * 테스트 경로에 파일이 없다면 테스트 실패합니다. 주의
+     * @throws IOException exception
+     */
     @Test
     void test() throws IOException {
         String src = "/Users/sunghs/Downloads/test.zip";

@@ -9,7 +9,7 @@ import org.springframework.core.io.Resource;
 import java.io.IOException;
 
 @Slf4j
-class HeapDumpMakerTest {
+class HeapDumpMakerTests {
 
     @Test
     void test() throws IOException {

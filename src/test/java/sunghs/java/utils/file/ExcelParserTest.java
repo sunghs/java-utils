@@ -8,6 +8,9 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * 테스트 경로에 파일이 없다면 테스트 실패합니다.
+ */
 @Slf4j
 class ExcelParserTest {
 
