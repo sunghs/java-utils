@@ -11,10 +11,10 @@
 
 [블로그](https://sunghs.tistory.com/category/Copy%26Paste)의 바로 사용 가능한 복사&붙여넣기 소스 입니다.
 
-## 개발환경 (Dev Environment)
-- IDE : IntelliJ 2020.01
-- JDK : Amazon-corretto-11
-- SpringBoot : 2.3
-- Gradle : 6.3
+## 개발환경 (Dev Environment) - 2021. 11. 29 updated
+- IDE : IntelliJ 2021
+- JDK : Java11 (Amazon-correto)
+- SpringBoot : 2.6.0
+- Gradle : 7.3
 
 입니다.
