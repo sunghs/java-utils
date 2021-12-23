@@ -14,7 +14,7 @@
 ### 개발환경 (Dev Environment)
 #### 2021-12-23 updated
 - IDE : IntelliJ 2021
-- JDK : Java11 (Amazon-correto)
+- JDK : Java11 (Amazon-corretto)
 - Gradle : 7.3
 
 입니다.
