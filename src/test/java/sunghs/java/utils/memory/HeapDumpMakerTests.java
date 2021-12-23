@@ -19,7 +19,5 @@ class HeapDumpMakerTests {
         Assertions.assertTrue(resource.isFile());
         Assertions.assertTrue(resource.contentLength() > 0);
         Assertions.assertTrue(StringUtils.isNotEmpty(resource.getFilename()));
-
-        log.info(resource.getFilename());
     }
 }

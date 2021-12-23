@@ -1,30 +1,41 @@
+import java.nio.charset.StandardCharsets
+
 buildscript {
     ext {
-        // 2021. 11. 29
-        springBootVersion = "2.6.0"
-        springDependencyManagementVersion = "1.0.11.RELEASE"
+        // 2021-12-23
         lombokVersion = "1.18.22"
+        apacheCommonsTextVersion = "1.8"
+        apachePoiOoxmlVersion = "4.1.2"
+        junit5Version = "5.8.1"
+        logbackVersion = "1.2.9"
+        springVersion = "5.3.14"
     }
 }
 
 plugins {
-    id 'org.springframework.boot' version "${springBootVersion}"
-    id 'io.spring.dependency-management' version "${springDependencyManagementVersion}"
     id 'java'
+    id 'java-library'
 }
 
 group = 'sunghs'
-version = '1.0.0-SNAPSHOT'
+version = '1.0.0.RELEASE'
 sourceCompatibility = JavaVersion.VERSION_11
+targetCompatibility = JavaVersion.VERSION_11
 
-configurations {
-    compileOnly {
-        extendsFrom annotationProcessor
+configurations.all {
+    resolutionStrategy {
+        failOnVersionConflict()
+        cacheDynamicVersionsFor 0, 'seconds'
+        cacheChangingModulesFor 0, 'seconds'
     }
 }
 
+tasks.withType(JavaCompile){
+    options.encoding = StandardCharsets.UTF_8
+}
+
 wrapper {
-    // 2021. 11. 29
+    // 2021-12-23
     gradleVersion = "7.3"
     distributionUrl = "https://services.gradle.org/distributions/gradle-$gradleVersion-bin.zip"
 }
@@ -35,21 +46,18 @@ repositories {
 
 dependencies {
     annotationProcessor("org.projectlombok:lombok:${lombokVersion}")
-    implementation("org.springframework.boot:spring-boot-starter:${springBootVersion}")
-
-    // StringMapper의 parse를 위한 라이브러리
-    implementation("org.apache.commons:commons-text:1.8")
-
-    // Lombok
+    implementation("org.springframework:spring-core:${springVersion}")
+    implementation("org.apache.commons:commons-text:${apacheCommonsTextVersion}")
     implementation("org.projectlombok:lombok:${lombokVersion}")
-
-    // Excel
-    // https://mvnrepository.com/artifact/org.apache.poi/poi-ooxml
-    implementation("org.apache.poi:poi-ooxml:4.1.2")
+    implementation("org.apache.poi:poi-ooxml:${apachePoiOoxmlVersion}")
+    // 2021-12-23
+    // spring 의존성 제거 후 필요한 slf4j 파사드 구현체 추가
+    implementation("ch.qos.logback:logback-core:${logbackVersion}")
+    implementation("ch.qos.logback:logback-classic:${logbackVersion}")
 
     // test
     testAnnotationProcessor("org.projectlombok:lombok:${lombokVersion}")
-    testImplementation("org.springframework.boot:spring-boot-starter-test:${springBootVersion}")
+    testImplementation("org.junit.jupiter:junit-jupiter:${junit5Version}")
 }
 
 test {

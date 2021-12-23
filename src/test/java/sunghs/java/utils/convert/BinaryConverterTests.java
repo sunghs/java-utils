@@ -2,8 +2,12 @@ package sunghs.java.utils.convert;
 
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.EnabledOnOs;
+import org.junit.jupiter.api.condition.OS;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.nio.ByteBuffer;
@@ -17,16 +21,32 @@ class BinaryConverterTests {
 
     private final BinaryConverter binaryConverter = new BinaryConverter(8);
 
+    private String src;
+
+    private String dest;
+
+    @BeforeEach
+    void setUp() {
+        src = "/Users/sunghs/Downloads/test.zip";
+        dest = "/Users/sunghs/Downloads/result.zip";
+    }
+
     /**
      * 테스트 경로에 파일이 없다면 테스트 실패합니다. 주의
+     *
      * @throws IOException exception
      */
     @Test
+    @EnabledOnOs(OS.MAC)
     void test() throws IOException {
-        String src = "/Users/sunghs/Downloads/test.zip";
-        String dest = "/Users/sunghs/Downloads/result.zip";
+        RandomAccessFile randomAccessFile1;
 
-        RandomAccessFile randomAccessFile1 = new RandomAccessFile(src, "r");
+        try {
+            randomAccessFile1 = new RandomAccessFile(src, "r");
+        } catch (FileNotFoundException e) {
+            log.info("file not found exception, skip test : {}", src);
+            return;
+        }
         FileChannel fileChannel1 = randomAccessFile1.getChannel();
         ByteBuffer byteBuffer1 = ByteBuffer.allocate(64);
 
@@ -51,8 +71,6 @@ class BinaryConverterTests {
         // when (byte -> string)
         String byteStrings = binaryConverter.convertBinaryToString(bytes);
 
-        log.info(byteStrings);
-
         // when (string -> byte)
         byte[] convertedBytes = binaryConverter.convertStringToBinary(byteStrings);
 
@@ -74,7 +92,7 @@ class BinaryConverterTests {
 
     boolean compare(String src, String dest) {
         try (FileChannel sChannel = new RandomAccessFile(src, "r").getChannel();
-            FileChannel dChannel = new RandomAccessFile(dest, "r").getChannel()) {
+             FileChannel dChannel = new RandomAccessFile(dest, "r").getChannel()) {
 
             if (sChannel.size() != dChannel.size()) {
                 return false;

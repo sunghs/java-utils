@@ -37,8 +37,8 @@ class StringMapperTests {
                 "\r\n" +
                 "1234567890";
 
+        Assertions.assertEquals(expected, doReplaced);
+        Assertions.assertEquals(expected, doReplacedRegEx);
         Assertions.assertEquals(doReplaced, doReplacedRegEx);
-        Assertions.assertEquals(doReplaced, expected);
-        Assertions.assertEquals(doReplacedRegEx, expected);
     }
 }
