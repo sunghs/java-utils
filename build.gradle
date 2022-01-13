@@ -17,8 +17,10 @@ plugins {
     id 'java-library'
 }
 
-group = 'sunghs'
-version = '1.0.0.RELEASE'
+group = "sunghs"
+archivesBaseName = "java-utils"
+version = "1.0.0"
+
 sourceCompatibility = JavaVersion.VERSION_11
 targetCompatibility = JavaVersion.VERSION_11
 
@@ -62,4 +64,13 @@ dependencies {
 
 test {
     useJUnitPlatform()
+    outputs.upToDateWhen {
+        false
+    }
+}
+
+jar {
+    dependsOn test
+    archiveBaseName = project.archivesBaseName
+    archiveVersion = project.version
 }
