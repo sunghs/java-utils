@@ -27,15 +27,7 @@ public class ImageUtils {
         }
     }
 
-    public static BufferedImage copyImage(final BufferedImage bufferedImage) {
-        return new BufferedImage(bufferedImage.getHeight(), bufferedImage.getWidth(), bufferedImage.getType());
-    }
-
     public static double getTheta(final int degree) {
-        if (degree >= 1 && degree < 360) {
-            return Math.PI / (double) (degree / 180);
-        } else {
-            return Math.PI;
-        }
+        return Math.toRadians(degree);
     }
 }
