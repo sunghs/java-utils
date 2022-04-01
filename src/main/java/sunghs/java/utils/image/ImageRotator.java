@@ -30,7 +30,7 @@ public class ImageRotator {
         int width = bufferedImage.getWidth();
         int height = bufferedImage.getHeight();
 
-        double theta = ImageUtils.getTheta(degree);
+        double theta = Math.toRadians(degree);
         double sinTheta = Math.abs(Math.sin(theta));
         double cosTheta = Math.abs(Math.cos(theta));
 

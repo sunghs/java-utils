@@ -26,8 +26,4 @@ public class ImageUtils {
             return null;
         }
     }
-
-    public static double getTheta(final int degree) {
-        return Math.toRadians(degree);
-    }
 }
