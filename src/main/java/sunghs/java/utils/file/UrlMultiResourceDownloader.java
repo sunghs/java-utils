@@ -3,6 +3,7 @@ package sunghs.java.utils.file;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
+import sunghs.java.utils.file.exception.InvalidResourceContextException;
 
 import java.io.FileOutputStream;
 import java.io.InputStream;
@@ -10,6 +11,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -36,19 +38,17 @@ public class UrlMultiResourceDownloader {
     public UrlMultiResourceDownloader(final int workerLimit) {
         this.urls = new ArrayList<>();
         this.worker = Executors.newFixedThreadPool(workerLimit);
-        // copy /b *.ts output-file.ts
     }
 
     public void setUrlMultiResourceContext(UrlMultiResourceContext urlMultiResourceContext) {
         if (urlMultiResourceContext.start < 0 || urlMultiResourceContext.end < urlMultiResourceContext.start) {
-            throw new RuntimeException("start는 0보다 커야하며 end 는 start 보다 같거나 커야합니다.");
+            throw new InvalidResourceContextException("start는 0보다 커야하며 end 는 start 보다 같거나 커야합니다.");
         }
         this.urlMultiResourceContext = urlMultiResourceContext;
-
         for (int i = urlMultiResourceContext.start; i <= urlMultiResourceContext.end; i++) {
             String url = urlMultiResourceContext.beforeUrl
-                    + String.format(urlMultiResourceContext.format, i)
-                    + (urlMultiResourceContext.afterUrl == null ? "" : urlMultiResourceContext.afterUrl);
+                    + (urlMultiResourceContext.format != null ? String.format(urlMultiResourceContext.format, i) : i)
+                    + (urlMultiResourceContext.afterUrl != null ? urlMultiResourceContext.afterUrl : "");
             urls.add(url);
             log.info("리스트 URL 추가 : {}", url);
         }
@@ -61,30 +61,49 @@ public class UrlMultiResourceDownloader {
         }
 
         List<String> failList = new ArrayList<>();
+        List<Callable<Boolean>> workList = new ArrayList<>();
 
         for (int i = urlMultiResourceContext.start; i <= urlMultiResourceContext.end; i++) {
             String url = urls.get(i);
             String path = urlMultiResourceContext.downloadPath;
             String fileName = i + urlMultiResourceContext.afterUrl;
-            worker.submit(() -> {
-                boolean result = download(url, path, fileName);
-                log.info("{} :: {} -> {}", Thread.currentThread(), fileName, result);
-                if (!result) {
-                    failList.add(url);
-                }
-            });
+            workList.add(() -> download(url, path, fileName, failList));
+        }
+
+        try {
+            worker.invokeAll(workList);
+        } catch (InterruptedException e) {
+            log.error("worker error", e);
+        } finally {
+            worker.shutdown();
         }
         return failList;
     }
 
-    private boolean download(String url, String path, String fileName) {
+    /**
+     * 현재 디렉토리 내의 여러개의 .ext 파일을 하나로 뭉칩니다.
+     * 결과물은 output.ext 입니다.
+     * 단순 병합이기에 분할 알고리즘이 다른 경우 사용 할 수 없습니다.
+     * @param extension extension
+     */
+    public void mergeCommand(final String extension) {
+        String path = urlMultiResourceContext.downloadPath.replace("\\", "/");
+        String command = "cmd /c cd " + path + " & " + "copy /b *." + extension + " output." + extension;
         try {
-            FileOutputStream fileOutputStream = new FileOutputStream(fileName);
+            Runtime.getRuntime().exec(command);
+        } catch (Exception e) {
+            log.error("mergeCommand error", e);
+        }
+    }
+
+    private boolean download(String url, String path, String fileName, List<String> failList) {
+        try {
+            FileOutputStream fileOutputStream = new FileOutputStream(path + fileName);
             InputStream inputStream = new URL(url).openStream();
 
             int size = 1048576; // 1MB
             byte[] buff = new byte[size];
-            float buffSize = 0;
+            float buffSize;
             float downloadSize = 0;
 
             while ((buffSize = inputStream.read(buff)) > 0) {
@@ -94,9 +113,11 @@ public class UrlMultiResourceDownloader {
             }
             fileOutputStream.close();
             inputStream.close();
+            log.info(" {} -> 성공", fileName);
             return true;
         } catch (Exception e) {
-            log.error("{} 다운로드 실패, 사유 : {}", url.toString(), e.getLocalizedMessage());
+            log.error("{} -> 실패, 사유 {}", fileName, e.getLocalizedMessage());
+            failList.add(url);
             return false;
         }
     }
