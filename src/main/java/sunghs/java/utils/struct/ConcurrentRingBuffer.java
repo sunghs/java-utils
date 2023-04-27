@@ -20,9 +20,9 @@ public class ConcurrentRingBuffer<T> {
 
     private final T[] concurrentBuffer;
 
-    private AtomicInteger head;
+    private final AtomicInteger head;
 
-    private AtomicInteger tail;
+    private final AtomicInteger tail;
 
     private final ReentrantLock reentrantLock;
 
