@@ -37,13 +37,13 @@ public class ConcurrentRingBuffer<T> {
     public boolean push(final T data) {
         reentrantLock.lock();
         try {
-            int next = (tail.get() + 1) % concurrentBuffer.length;
-            if (next == head.get()) {
-                return false;
+            int current = tail.get();
+            if (concurrentBuffer[current] == null) {
+                concurrentBuffer[current] = data;
+                tail.set((tail.get() + 1) % concurrentBuffer.length);
+                return true;
             }
-            concurrentBuffer[tail.get()] = data;
-            tail.set(next);
-            return true;
+            return false;
         } finally {
             reentrantLock.unlock();
         }
