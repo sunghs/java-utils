@@ -34,6 +34,11 @@ public class ConcurrentRingBuffer<T> {
         reentrantLock = new ReentrantLock();
     }
 
+    /**
+     * 데이터를 넣습니다. capacity 만큼 꽉 찬 경우 에러나지 않습니다.
+     * @param data 데이터
+     * @return 데이터 삽입 시 true, 꽉 찬 경우 false
+     */
     public boolean push(final T data) {
         reentrantLock.lock();
         try {
@@ -49,6 +54,10 @@ public class ConcurrentRingBuffer<T> {
         }
     }
 
+    /**
+     * FIFO 형태로 데이터를 빼고 head 를 한칸 위로 올립니다.
+     * @return 데이터, 값이 없는 경우 null
+     */
     public T pop() {
         reentrantLock.lock();
         try {
@@ -65,6 +74,11 @@ public class ConcurrentRingBuffer<T> {
         }
     }
 
+    /**
+     * 특정 위치의 데이터를 조회함. capacity를 넘어가면 다시 처음으로 돌아가 조회합니다.
+     * @param index 데이터 순서. 0, 1, 2, ... (capacity - 1)
+     * @return 데이터, 값이 없는 경우 null
+     */
     public T get(int index) {
         return concurrentBuffer[index % concurrentBuffer.length];
     }
@@ -73,6 +87,10 @@ public class ConcurrentRingBuffer<T> {
         return concurrentBuffer.length;
     }
 
+    /**
+     * 큐를 비웁니다.
+     * @return 성공시 true, 실패시 false
+     */
     public boolean clear() {
         reentrantLock.lock();
         try {
